@@ -1,156 +1,137 @@
 -- Database Schema for Matthias Silberhain Website
+-- Created: 2024-01-14
 
-CREATE DATABASE IF NOT EXISTS silberhain_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE silberhain_db;
+-- Create database
+CREATE DATABASE IF NOT EXISTS `silberhain_db`
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE `silberhain_db`;
+
+-- Users table (for admin access)
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(50) NOT NULL UNIQUE,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `full_name` VARCHAR(100) NOT NULL,
+    `role` ENUM('admin', 'editor') DEFAULT 'editor',
+    `last_login` DATETIME DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `is_active` BOOLEAN DEFAULT TRUE,
+    INDEX idx_username (username),
+    INDEX idx_email (email)
+) ENGINE=InnoDB;
 
 -- Books table
-CREATE TABLE books (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    author VARCHAR(255) NOT NULL DEFAULT 'Matthias Silberhain',
-    description TEXT,
-    cover_image VARCHAR(500),
-    sample_pdf VARCHAR(500),
-    purchase_link VARCHAR(500),
-    published BOOLEAN DEFAULT FALSE,
-    featured BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_published (published),
-    INDEX idx_featured (featured),
-    INDEX idx_created (created_at)
-);
+CREATE TABLE IF NOT EXISTS `books` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(200) NOT NULL,
+    `author` VARCHAR(200) DEFAULT 'Matthias Silberhain',
+    `description` TEXT NOT NULL,
+    `cover_image` VARCHAR(255) DEFAULT NULL,
+    `sample_pdf` VARCHAR(255) DEFAULT NULL,
+    `purchase_link` VARCHAR(500) DEFAULT NULL,
+    `is_published` BOOLEAN DEFAULT FALSE,
+    `is_featured` BOOLEAN DEFAULT FALSE,
+    `sort_order` INT DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `published_at` DATETIME DEFAULT NULL,
+    INDEX idx_published (is_published),
+    INDEX idx_featured (is_featured),
+    INDEX idx_sort (sort_order)
+) ENGINE=InnoDB;
 
 -- Events/Calendar table
-CREATE TABLE events (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    location VARCHAR(255),
-    event_date DATE NOT NULL,
-    event_time TIME,
-    end_date DATE,
-    end_time TIME,
-    link VARCHAR(500),
-    published BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+CREATE TABLE IF NOT EXISTS `events` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(200) NOT NULL,
+    `description` TEXT,
+    `location` VARCHAR(200) NOT NULL,
+    `address` TEXT,
+    `event_date` DATE NOT NULL,
+    `event_time` TIME,
+    `end_date` DATE,
+    `end_time` TIME,
+    `event_type` ENUM('reading', 'signing', 'workshop', 'conference') DEFAULT 'reading',
+    `is_public` BOOLEAN DEFAULT TRUE,
+    `max_participants` INT DEFAULT NULL,
+    `current_participants` INT DEFAULT 0,
+    `registration_link` VARCHAR(500) DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_event_date (event_date),
-    INDEX idx_published (published)
-);
+    INDEX idx_public (is_public),
+    INDEX idx_type (event_type)
+) ENGINE=InnoDB;
 
--- Social Media table
-CREATE TABLE social_media (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    platform VARCHAR(100) NOT NULL,
-    url VARCHAR(500) NOT NULL,
-    icon VARCHAR(100),
-    display_order INT DEFAULT 0,
-    enabled BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY uniq_platform (platform)
-);
+-- Social Media Links
+CREATE TABLE IF NOT EXISTS `social_links` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `platform` VARCHAR(50) NOT NULL,
+    `display_name` VARCHAR(100) NOT NULL,
+    `url` VARCHAR(500) NOT NULL,
+    `icon_class` VARCHAR(50) DEFAULT 'fas fa-link',
+    `sort_order` INT DEFAULT 0,
+    `is_active` BOOLEAN DEFAULT TRUE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_platform (platform),
+    INDEX idx_active (is_active),
+    INDEX idx_sort (sort_order)
+) ENGINE=InnoDB;
 
--- Settings table
-CREATE TABLE settings (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    setting_key VARCHAR(100) NOT NULL UNIQUE,
-    setting_value TEXT,
-    setting_type ENUM('string', 'json', 'boolean', 'number') DEFAULT 'string',
-    category VARCHAR(100),
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+-- Design Settings
+CREATE TABLE IF NOT EXISTS `design_settings` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `setting_key` VARCHAR(100) NOT NULL UNIQUE,
+    `setting_value` TEXT,
+    `setting_type` ENUM('color', 'image', 'text', 'boolean') DEFAULT 'text',
+    `category` VARCHAR(50) DEFAULT 'general',
+    `description` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_key (setting_key),
     INDEX idx_category (category)
-);
+) ENGINE=InnoDB;
 
--- Background images table
-CREATE TABLE background_images (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    file_path VARCHAR(500) NOT NULL,
-    thumbnail_path VARCHAR(500),
-    active BOOLEAN DEFAULT FALSE,
-    display_order INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_active (active)
-);
-
--- Admin logs table
-CREATE TABLE admin_logs (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    admin_user VARCHAR(100),
-    action VARCHAR(100) NOT NULL,
-    resource VARCHAR(100),
-    resource_id INT,
-    details JSON,
-    ip_address VARCHAR(45),
-    user_agent TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_admin_user (admin_user),
+-- Activity Log
+CREATE TABLE IF NOT EXISTS `activity_log` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED DEFAULT NULL,
+    `action` VARCHAR(100) NOT NULL,
+    `entity_type` VARCHAR(50) DEFAULT NULL,
+    `entity_id` INT UNSIGNED DEFAULT NULL,
+    `details` TEXT,
+    `ip_address` VARCHAR(45) DEFAULT NULL,
+    `user_agent` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user (user_id),
     INDEX idx_action (action),
-    INDEX idx_created (created_at)
-);
+    INDEX idx_created (created_at),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
 
--- Website visitors log (optional, for basic analytics)
-CREATE TABLE visitor_logs (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    ip_address VARCHAR(45),
-    user_agent TEXT,
-    page_visited VARCHAR(500),
-    referrer VARCHAR(500),
-    visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_visit_time (visit_time),
-    INDEX idx_page (page_visited(255))
-);
+-- Insert default admin user (change password after installation!)
+-- Default password: admin123 (change immediately!)
+INSERT INTO `users` (`username`, `password_hash`, `email`, `full_name`, `role`) VALUES
+('admin', '$2y$10$YourHashedPasswordHere', 'admin@silberhain.de', 'Administrator', 'admin');
 
--- Insert default settings
-INSERT INTO settings (setting_key, setting_value, setting_type, category, description) VALUES
-('site_name', 'Matthias Silberhain', 'string', 'general', 'Name der Website'),
-('contact_email', 'kontakt@silberhain.de', 'string', 'general', 'Kontakt-E-Mail-Adresse'),
-('theme', 'black', 'string', 'design', 'Aktives Theme (black oder dark-gray)'),
-('colors', '{"primary":"#000000","secondary":"#1a1a1a","accent":"#c0c0c0","text":"#c0c0c0"}', 'json', 'design', 'Farbpalette der Website'),
-('analytics_code', '', 'string', 'general', 'Google Analytics Tracking Code'),
-('maintenance_mode', '0', 'boolean', 'general', 'Wartungsmodus aktivieren'),
-('default_background', '1', 'number', 'design', 'Standard-Hintergrundbild ID');
+-- Insert default social links
+INSERT INTO `social_links` (`platform`, `display_name`, `url`, `icon_class`, `sort_order`) VALUES
+('facebook', 'Facebook', 'https://facebook.com/matthiassilberhain', 'fab fa-facebook', 1),
+('twitter', 'Twitter', 'https://twitter.com/msilberhain', 'fab fa-twitter', 2),
+('instagram', 'Instagram', 'https://instagram.com/matthiassilberhain', 'fab fa-instagram', 3),
+('goodreads', 'Goodreads', 'https://goodreads.com/matthiassilberhain', 'fab fa-goodreads', 4);
 
--- Insert default social media platforms
-INSERT INTO social_media (platform, url, icon, display_order, enabled) VALUES
-('Facebook', 'https://facebook.com/matthiassilberhain', 'facebook', 1, 1),
-('Twitter', 'https://twitter.com/msilberhain', 'twitter', 2, 1),
-('Instagram', 'https://instagram.com/matthiassilberhain', 'instagram', 3, 1),
-('Goodreads', 'https://goodreads.com/matthiassilberhain', 'book', 4, 1);
-
--- Insert sample books
-INSERT INTO books (title, author, description, cover_image, sample_pdf, purchase_link, published, featured) VALUES
-('Der Schatten des Nordens', 'Matthias Silberhain', 'Ein epischer Fantasy-Roman über die Abenteuer eines jungen Helden in einer vergessenen Welt.', '/assets/images/books/book1.jpg', '/docs/samples/book1.pdf', 'https://example.com/shop/book1', 1, 1),
-('Die Chroniken von Arkania', 'Matthias Silberhain', 'Die erste Trilogie einer spannenden Fantasy-Saga über Macht, Magie und Schicksal.', '/assets/images/books/book2.jpg', '/docs/samples/book2.pdf', 'https://example.com/shop/book2', 1, 1),
-('Im Zeichen des Silbermonds', 'Matthias Silberhain', 'Ein mystischer Roman über die Geheimnisse einer alten Prophezeiung und ihre Erfüllung.', '/assets/images/books/book3.jpg', '/docs/samples/book3.pdf', 'https://example.com/shop/book3', 1, 0);
-
--- Insert sample events
-INSERT INTO events (title, description, location, event_date, event_time, link, published) VALUES
-('Lesung in Berlin', 'Eine exklusive Lesung aus "Der Schatten des Nordens"', 'Buchhandlung am Markt, Berlin', '2024-02-15', '19:00:00', 'https://example.com/event1', 1),
-('Buchmesse Leipzig', 'Signierstunde und Gespräche', 'Leipziger Buchmesse', '2024-03-20', '14:00:00', 'https://example.com/event2', 1),
-('Online-Lesung', 'Live-Lesung auf YouTube', 'Online', '2024-01-30', '20:00:00', 'https://youtube.com/c/matthiassilberhain', 1);
-
--- Create admin user (change password in production!)
--- Note: In production, use a secure password hash
-INSERT INTO settings (setting_key, setting_value, setting_type, category, description) VALUES
-('admin_username', 'admin', 'string', 'security', 'Admin Benutzername'),
-('admin_password_hash', '$2y$10$YourHashedPasswordHere', 'string', 'security', 'Gehashtes Admin Passwort');
-
--- Create a view for dashboard statistics
-CREATE VIEW dashboard_stats AS
-SELECT 
-    (SELECT COUNT(*) FROM books WHERE published = 1) as published_books,
-    (SELECT COUNT(*) FROM books WHERE featured = 1) as featured_books,
-    (SELECT COUNT(*) FROM events WHERE published = 1 AND event_date >= CURDATE()) as upcoming_events,
-    (SELECT COUNT(*) FROM social_media WHERE enabled = 1) as active_social_profiles,
-    (SELECT COUNT(*) FROM visitor_logs WHERE DATE(visit_time) = CURDATE()) as today_visitors;
-
--- Create indexes for performance
-CREATE INDEX idx_books_updated ON books(updated_at);
-CREATE INDEX idx_events_upcoming ON events(event_date) WHERE published = 1 AND event_date >= CURDATE();
-CREATE INDEX idx_social_order ON social_media(display_order) WHERE enabled = 1;
+-- Insert default design settings
+INSERT INTO `design_settings` (`setting_key`, `setting_value`, `setting_type`, `category`, `description`) VALUES
+('primary_color', '#c0c0c0', 'color', 'colors', 'Primary accent color (silver)'),
+('background_color', '#000000', 'color', 'colors', 'Background color for dark theme'),
+('text_color', '#c0c0c0', 'color', 'colors', 'Primary text color'),
+('font_heading', 'Montserrat', 'text', 'typography', 'Heading font family'),
+('font_body', 'EB Garamond', 'text', 'typography', 'Body text font family'),
+('dark_mode_enabled', '1', 'boolean', 'features', 'Enable dark mode by default'),
+('default_theme', 'black', 'text', 'features', 'Default theme (black or dark-gray)');
