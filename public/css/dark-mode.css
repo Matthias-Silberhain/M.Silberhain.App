@@ -1,0 +1,305 @@
+/* Dark Mode Styles - Matthias Silberhain */
+
+/* ===== DARK MODE VARIABLES ===== */
+:root {
+    /* Black Theme (Default) */
+    --color-bg-primary: #000000;
+    --color-bg-secondary: #0a0a0a;
+    --color-bg-tertiary: #1a1a1a;
+    
+    --color-text-primary: #c0c0c0;
+    --color-text-secondary: #888888;
+    --color-text-tertiary: #666666;
+    
+    --color-border: rgba(192, 192, 192, 0.1);
+    --color-shadow: rgba(0, 0, 0, 0.5);
+    
+    --color-accent: #c0c0c0;
+    --color-accent-hover: #ffffff;
+    
+    --color-overlay: rgba(0, 0, 0, 0.8);
+    --color-overlay-light: rgba(0, 0, 0, 0.5);
+    
+    /* Button Colors */
+    --btn-primary-bg: #c0c0c0;
+    --btn-primary-text: #000000;
+    --btn-primary-hover-bg: #d0d0d0;
+    
+    --btn-secondary-bg: transparent;
+    --btn-secondary-text: #c0c0c0;
+    --btn-secondary-hover-bg: rgba(192, 192, 192, 0.1);
+}
+
+[data-theme="dark-gray"] {
+    /* Dark Gray Theme */
+    --color-bg-primary: #1a1a1a;
+    --color-bg-secondary: #252525;
+    --color-bg-tertiary: #333333;
+    
+    --color-text-primary: #e0e0e0;
+    --color-text-secondary: #aaaaaa;
+    --color-text-tertiary: #888888;
+    
+    --color-border: rgba(224, 224, 224, 0.15);
+    --color-shadow: rgba(0, 0, 0, 0.4);
+    
+    --color-accent: #e0e0e0;
+    --color-accent-hover: #ffffff;
+    
+    --color-overlay: rgba(26, 26, 26, 0.9);
+    --color-overlay-light: rgba(26, 26, 26, 0.6);
+    
+    /* Button Colors */
+    --btn-primary-bg: #e0e0e0;
+    --btn-primary-text: #1a1a1a;
+    --btn-primary-hover-bg: #ffffff;
+    
+    --btn-secondary-bg: transparent;
+    --btn-secondary-text: #e0e0e0;
+    --btn-secondary-hover-bg: rgba(224, 224, 224, 0.15);
+}
+
+/* ===== BASE STYLES ===== */
+body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== HEADER & NAVIGATION ===== */
+.main-header {
+    background-color: var(--color-overlay);
+    border-bottom-color: var(--color-border);
+}
+
+.nav-link {
+    color: var(--color-text-primary);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--color-accent-hover);
+}
+
+.nav-link::after {
+    background-color: var(--color-accent);
+}
+
+.nav-link.admin {
+    background-color: var(--btn-secondary-hover-bg);
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-bg);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: transparent;
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    border-color: var(--color-accent);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+/* ===== CARDS & CONTAINERS ===== */
+.book-card,
+.event-card,
+.social-card {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+    box-shadow: 0 4px 6px var(--color-shadow);
+}
+
+.book-card:hover {
+    box-shadow: 0 10px 20px var(--color-shadow);
+}
+
+/* ===== FORM ELEMENTS ===== */
+input,
+textarea,
+select {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-overlay-light);
+}
+
+/* ===== FOOTER ===== */
+.main-footer {
+    background-color: var(--color-bg-secondary);
+    border-top-color: var(--color-border);
+}
+
+.footer-title {
+    color: var(--color-accent);
+}
+
+.footer-contact a,
+.social-links a,
+.legal-links a {
+    color: var(--color-text-secondary);
+}
+
+.footer-contact a:hover,
+.social-links a:hover,
+.legal-links a:hover {
+    color: var(--color-accent-hover);
+}
+
+.footer-bottom {
+    border-top-color: var(--color-border);
+    color: var(--color-text-tertiary);
+}
+
+/* ===== DARK MODE TOGGLE ===== */
+.dark-mode-toggle {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-secondary);
+}
+
+.dark-mode-toggle:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-bg-tertiary);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.bg-primary {
+    background-color: var(--color-bg-primary);
+}
+
+.bg-secondary {
+    background-color: var(--color-bg-secondary);
+}
+
+.bg-tertiary {
+    background-color: var(--color-bg-tertiary);
+}
+
+.text-primary {
+    color: var(--color-text-primary);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.border-color {
+    border-color: var(--color-border);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-text-tertiary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-secondary);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+::-moz-selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+/* ===== PLACEHOLDER ===== */
+::placeholder {
+    color: var(--color-text-tertiary);
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: var(--color-text-tertiary);
+}
+
+::-ms-input-placeholder {
+    color: var(--color-text-tertiary);
+}
+
+/* ===== LOADING STATES ===== */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5em;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-contrast: high) {
+    :root,
+    [data-theme="dark-gray"] {
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #cccccc;
+        --color-border: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    :root,
+    [data-theme="dark-gray"] {
+        --color-bg-primary: #ffffff;
+        --color-text-primary: #000000;
+        --color-text-secondary: #333333;
+    }
+    
+    .dark-mode-toggle,
+    .preloader,
+    .admin-link {
+        display: none !important;
+    }
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de-DE" class="admin-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>Admin Dashboard | Matthias Silberhain</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../public/css/typography.css">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/logos/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Admin Login Screen (initial state) -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="../assets/logos/logo.png" alt="Matthias Silberhain Logo" class="login-logo">
+                <h1 class="login-title">Admin Dashboard</h1>
+                <p class="login-subtitle">Bitte melden Sie sich an</p>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Benutzername</label>
+                    <input type="text" id="username" name="username" class="form-input" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Passwort</label>
+                    <input type="password" id="password" name="password" class="form-input" required autocomplete="current-password">
+                </div>
+                
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember" id="remember">
+                        <span class="checkbox-custom"></span>
+                        Angemeldet bleiben
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Anmelden
+                </button>
+                
+                <div class="login-footer">
+                    <p class="security-note">
+                        <i class="fas fa-shield-alt"></i>
+                        Geschützter Admin-Bereich
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Admin Dashboard (hidden until login) -->
+    <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="admin-header-container">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menü umschalten">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="admin-brand">
+                    <img src="../assets/logos/logo-small.png" alt="Logo" class="admin-logo">
+                    <h1 class="admin-title">Admin Dashboard</h1>
+                </div>
+                
+                <div class="admin-actions">
+                    <button class="btn btn-icon" id="admin-theme-toggle" aria-label="Theme umschalten">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <div class="admin-user">
+                        <span class="user-name">Administrator</span>
+                        <button class="btn btn-icon btn-logout" id="logout-btn" aria-label="Abmelden">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Admin Layout -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar" id="admin-sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item active">
+                            <a href="#dashboard" class="sidebar-link" data-section="dashboard">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#books" class="sidebar-link" data-section="books">
+                                <i class="fas fa-book"></i>
+                                <span>Bücherverwaltung</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#calendar" class="sidebar-link" data-section="calendar">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Terminverwaltung</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#social" class="sidebar-link" data-section="social">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Social Media</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#design" class="sidebar-link" data-section="design">
+                                <i class="fas fa-palette"></i>
+                                <span>Design & Farben</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#settings" class="sidebar-link" data-section="settings">
+                                <i class="fas fa-cog"></i>
+                                <span>Einstellungen</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="../public/index.html" class="sidebar-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Zur Website</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="sidebar-footer">
+                        <div class="system-status">
+                            <div class="status-indicator online"></div>
+                            <span>System: Online</span>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="admin-main" id="admin-main">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="admin-section active">
+                    <div class="section-header">
+                        <h2 class="section-title">Dashboard</h2>
+                        <p class="section-subtitle">Willkommen im Admin-Bereich</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">Bücher</h3>
+                                <p class="stat-value" id="books-count">0</p>
+                                <p class="stat-change">Veröffentlicht</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">Termine</h3>
+                                <p class="stat-value" id="events-count">0</p>
+                                <p class="stat-change">Geplant</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">Social Links</h3>
+                                <p class="stat-value" id="social-count">0</p>
+                                <p class="stat-change">Aktiv</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">Besucher</h3>
+                                <p class="stat-value" id="visitors-count">0</p>
+                                <p class="stat-change">Heute</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-content">
+                        <div class="content-grid">
+                            <div class="content-card">
+                                <h3 class="content-title">Schnellzugriff</h3>
+                                <div class="quick-actions">
+                                    <button class="btn btn-secondary btn-action" data-action="add-book">
+                                        <i class="fas fa-plus"></i>
+                                        Buch hinzufügen
+                                    </button>
+                                    <button class="btn btn-secondary btn-action" data-action="add-event">
+                                        <i class="fas fa-calendar-plus"></i>
+                                        Termin hinzufügen
+                                    </button>
+                                    <button class="btn btn-secondary btn-action" data-action="upload-cover">
+                                        <i class="fas fa-image"></i>
+                                        Cover hochladen
+                                    </button>
+                                    <button class="btn btn-secondary btn-action" data-action="view-logs">
+                                        <i class="fas fa-file-alt"></i>
+                                        Logs ansehen
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card">
+                                <h3 class="content-title">Letzte Aktivitäten</h3>
+                                <div class="activity-list" id="activity-list">
+                                    <!-- Activities will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card full-width">
+                            <h3 class="content-title">Systeminformationen</h3>
+                            <div class="system-info">
+                                <div class="info-item">
+                                    <span class="info-label">PHP Version:</span>
+                                    <span class="info-value" id="php-version">Laden...</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Speicherverbrauch:</span>
+                                    <span class="info-value" id="memory-usage">Laden...</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Letztes Backup:</span>
+                                    <span class="info-value" id="last-backup">Laden...</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Speicherplatz:</span>
+                                    <span class="info-value" id="storage-space">Laden...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Books Management Section -->
+                <section id="books-section" class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Bücherverwaltung</h2>
+                        <p class="section-subtitle">Verwalten Sie Ihre Bücher, Cover und Leseproben</p>
+                    </div>
+                    
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="add-book-btn">
+                            <i class="fas fa-plus"></i>
+                            Neues Buch hinzufügen
+                        </button>
+                    </div>
+                    
+                    <div class="books-management" id="books-management">
+                        <!-- Books will be loaded here -->
+                    </div>
+                </section>
+                
+                <!-- Calendar Management Section -->
+                <section id="calendar-section" class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Terminverwaltung</h2>
+                        <p class="section-subtitle">Verwalten Sie Ihre Lesungen und Veranstaltungen</p>
+                    </div>
+                    
+                    <div class="calendar-management" id="calendar-management">
+                        <!-- Calendar will be loaded here -->
+                    </div>
+                </section>
+                
+                <!-- Social Media Management Section -->
+                <section id="social-section" class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Social Media</h2>
+                        <p class="section-subtitle">Verwalten Sie Ihre Social Media Profile</p>
+                    </div>
+                    
+                    <div class="social-management" id="social-management">
+                        <!-- Social media management interface -->
+                    </div>
+                </section>
+                
+                <!-- Design & Colors Management Section -->
+                <section id="design-section" class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Design & Farben</h2>
+                        <p class="section-subtitle">Passen Sie das Aussehen Ihrer Website an</p>
+                    </div>
+                    
+                    <div class="design-management" id="design-management">
+                        <!-- Design management interface -->
+                    </div>
+                </section>
+                
+                <!-- Settings Section -->
+                <section id="settings-section" class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Einstellungen</h2>
+                        <p class="section-subtitle">Allgemeine Einstellungen und Konfiguration</p>
+                    </div>
+                    
+                    <div class="settings-management" id="settings-management">
+                        <!-- Settings interface -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="../public/js/main.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/books-manager.js"></script>
+    <script src="js/settings-manager.js"></script>
+    
+    <!-- Initialize -->
+    <script>
+        // Prevent access without proper authentication
+        if (!sessionStorage.getItem('admin_authenticated')) {
+            document.getElementById('login-screen').style.display = 'block';
+            document.getElementById('admin-dashboard').style.display = 'none';
+        } else {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

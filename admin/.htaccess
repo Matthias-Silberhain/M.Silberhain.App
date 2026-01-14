@@ -1,0 +1,13 @@
+AuthType Basic
+AuthName "Admin Area"
+AuthUserFile /path/to/.htpasswd
+Require valid-user
+
+Options -Indexes
+ErrorDocument 401 /admin/unauthorized.html
+ErrorDocument 403 /admin/forbidden.html
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+</IfModule>
