@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de-DE" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bücher | Matthias Silberhain</title>
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/logos/favicon.ico">
+</head>
+<body>
+    <div id="main-content" class="main-content" aria-hidden="false">
+        <header class="main-header">
+            <nav class="main-nav" aria-label="Hauptnavigation">
+                <div class="nav-container">
+                    <a href="index.html" class="nav-logo" aria-label="Startseite">
+                        <img src="assets/logos/logo-small.png" alt="Matthias Silberhain">
+                    </a>
+                    
+                    <button class="mobile-menu-toggle" aria-label="Menü öffnen" aria-expanded="false">
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                    </button>
+                    
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Start</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="books.html" class="nav-link" aria-current="page">Bücher</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="calendar.html" class="nav-link">Termine</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">Kontakt</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Dark Mode umschalten">
+                                <span class="toggle-icon sun">☀️</span>
+                                <span class="toggle-icon moon">🌙</span>
+                            </button>
+                        </li>
+                        <li class="nav-item admin-link">
+                            <a href="../admin/index.html" class="nav-link admin" aria-label="Admin Bereich">
+                                <svg class="admin-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 15v3m0 3v-3m0 0h3m-3 0H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="section">
+            <div class="container">
+                <h1>Meine Bücher</h1>
+                <p class="lead">Entdecken Sie meine veröffentlichten Werke, Leseproben und wo Sie sie kaufen können.</p>
+                
+                <div class="books-grid" id="books-list">
+                    <!-- Bücher werden per JavaScript geladen -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3 class="footer-title">Kontakt</h3>
+                    <address class="footer-contact">
+                        <p>Matthias Silberhain</p>
+                        <p>E-Mail: <a href="mailto:kontakt@silberhain.de">kontakt@silberhain.de</a></p>
+                    </address>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Social Media</h3>
+                    <ul class="social-links" id="social-links">
+                        <!-- Wird per JS geladen -->
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Rechtliches</h3>
+                    <ul class="legal-links">
+                        <li><a href="impressum.html">Impressum</a></li>
+                        <li><a href="datenschutz.html">Datenschutz</a></li>
+                        <li><a href="agb.html">AGB</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2024</span> Matthias Silberhain. Alle Rechte vorbehalten.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/dark-mode.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
