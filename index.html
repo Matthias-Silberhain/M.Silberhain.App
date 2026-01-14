@@ -1,14 +1,82 @@
 <!DOCTYPE html>
-<html lang="de-DE">
+<html lang="de-DE" class="dark-mode">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=public/index.html">
-    <title>Matthias Silberhain - Weiterleitung</title>
-    <script>
-        window.location.href = "public/index.html";
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Matthias Silberhain - Autor und Schriftsteller">
+    <meta name="author" content="Matthias Silberhain">
+    
+    <title>Matthias Silberhain | Autor</title>
+    
+    <style>
+        body {
+            background-color: #000;
+            color: #c0c0c0;
+            font-family: 'EB Garamond', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #c0c0c0;
+            color: #000;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #e0e0e0;
+        }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 10px rgba(192, 192, 192, 0.3));
+        }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="public/assets/logos/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p>Wenn Sie nicht automatisch weitergeleitet werden, klicken Sie <a href="public/index.html">hier</a>.</p>
+    <div class="container">
+        <img src="public/assets/logos/logo.png" alt="Matthias Silberhain Logo" class="logo">
+        <h1>MATTHIAS SILBERHAIN</h1>
+        <p>Willkommen auf der offiziellen Website von Matthias Silberhain. Die vollständige Website wird derzeit aufgebaut und ist bald verfügbar.</p>
+        <p>
+            <a href="public/index.html" class="button">Zur Testversion der Website</a>
+        </p>
+        <p style="margin-top: 3rem; font-size: 0.9rem; color: #888;">
+            © 2024 Matthias Silberhain. Alle Rechte vorbehalten.
+        </p>
+    </div>
 </body>
 </html>
